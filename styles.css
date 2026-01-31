@@ -16,6 +16,29 @@
     box-sizing: border-box;
 }
 
+/* Performance optimizations for 60 FPS */
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* GPU acceleration for animated elements */
+.hero-slide,
+.hero-slide img,
+.trainer-image img,
+.gallery-item img,
+.particle,
+.service-card,
+.feature-item,
+.trainer-card,
+.testimonial-card,
+.pricing-card {
+    transform: translateZ(0);
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
 html {
     position: relative;
     min-height: 100%;
@@ -44,6 +67,9 @@ body::before {
     animation: gradientShift 15s ease infinite;
     z-index: -2;
     opacity: 1;
+    will-change: background-position;
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 body::after {
@@ -60,6 +86,9 @@ body::after {
     animation: pulseGlow 20s ease-in-out infinite;
     z-index: -1;
     pointer-events: none;
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 /* Floating Particles Background */
@@ -83,6 +112,10 @@ body::after {
     border: 1px solid rgba(40, 40, 40, 0.1);
     animation: floatParticle 20s infinite ease-in-out;
     box-shadow: 0 0 30px rgba(40, 40, 40, 0.1);
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    contain: layout style paint;
 }
 
 .particle:nth-child(1) {
@@ -321,6 +354,10 @@ body::after {
     overflow: hidden;
     z-index: 1;
     visibility: hidden;
+    will-change: opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    contain: layout style paint;
 }
 
 .hero-slide.active {
@@ -344,6 +381,11 @@ body::after {
     top: 0;
     left: 0;
     z-index: 1;
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
 }
 
 .hero-slide.active img {
@@ -1183,8 +1225,9 @@ body::after {
 }
 
 .service-card:hover {
-    transform: translateY(-5px);
+    transform: translate3d(0, -5px, 0);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    will-change: transform;
 }
 
 .card-icon {
@@ -1610,7 +1653,7 @@ body::after {
 }
 
 .trainer-card:hover .trainer-image img {
-    transform: scale(1.1);
+    transform: translateZ(0) scale(1.1);
 }
 
 .trainer-info {
